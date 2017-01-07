@@ -20,14 +20,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        /*include: [
-          path.join(__dirname, 'src', 'actions'),
-          path.join(__dirname, 'src', 'client'),
-          path.join(__dirname, 'src', 'components'),
-          path.join(__dirname, 'src', 'infra'),
-          path.join(__dirname, 'src', 'reducers')
-        ]*/
+        loaders: ['babel-loader', 'eslint-loader'],
         exclude: /node_modules/
       }
     ]
@@ -37,13 +30,17 @@ module.exports = {
     fs: "empty"
   },
   
-  devtool: 'inline-source-map'
-  ,
+  devtool: 'inline-source-map',
+
   devServer: {
     hot: true,
     proxy: {
       '*': 'http://127.0.0.1:3000'
     },
     host: '127.0.0.1'
+  },
+
+  eslint: {
+    configFile: './.eslintrc'
   }
 };

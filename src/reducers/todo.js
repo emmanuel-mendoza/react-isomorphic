@@ -42,6 +42,6 @@ function todo(state = [], action) {
         default:
             return state;
     }
-};
+}
 
 export default todo;

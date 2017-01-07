@@ -51,3 +51,9 @@ export default class TodosView extends React.Component {
     );
   }
 }
+
+TodosView.propTypes = {
+  todos: React.PropTypes.array.isRequired,
+  deleteTodo: React.PropTypes.func.isRequired,
+  editTodo: React.PropTypes.func.isRequired,
+}

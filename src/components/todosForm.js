@@ -29,3 +29,7 @@ export default class TodosForm extends React.Component {
     );
   }
 }
+
+TodosForm.propTypes = {
+  createTodo: React.PropTypes.func
+}

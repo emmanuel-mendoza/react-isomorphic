@@ -8,7 +8,7 @@ import store, { history } from '../store';
 
 render(
   <Provider store={store}>
-    <Router routes={routes} history={browserHistory}/>
+    <Router routes={routes} history={browserHistory} />
   </Provider>,
   document.getElementById('react-view')
 )
