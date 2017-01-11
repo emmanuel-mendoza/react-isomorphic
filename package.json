@@ -14,7 +14,6 @@
     "start": "npm-run-all -p -r app-server wp-server"
   },
   "dependencies": {
-    "axios": "^0.15.2",
     "body-parser": "^1.15.2",
     "ejs": "^2.5.5",
     "express": "^4.14.0",
