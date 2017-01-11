@@ -44,14 +44,6 @@
         // allow only .js as file extension for jsx components
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
         "react/jsx-filename-extension": ["error", { "extensions": [".js"] }]
-
-        //temporary off to verify if this is the reason of why webpack is not creating the bundle
-        ,"quote-props": "off",
-        "react/prefer-stateless-function": "off",
-        "no-unused-vars": "off",
-        "prefer-template": "off",
-        "no-confusing-arrow": "off",
-        "react/no-string-refs": "off"
     },
 
     "settings": {

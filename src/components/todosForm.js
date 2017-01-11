@@ -10,19 +10,17 @@ export default class TodosForm extends React.Component {
     // avoids page refreshing
     e.preventDefault();
 
-    const node = this.refs['todo-input'];
-
-    this.props.createTodo(node.value);
+    this.props.createTodo(this.todoInput.value);
 
     // clear the form after submission
-    this.refs.todosForm.reset();
+    this.todosForm.reset();
   }
 
   render() {
     return (
       <div id="todo-form">
-        <form ref="todosForm" onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="type todo" ref="todo-input" />
+        <form ref={(form) => { this.todosForm = form; }} onSubmit={this.handleSubmit}>
+          <input type="text" placeholder="type todo" ref={(input) => { this.todoInput = input; }} />
           <input type="submit" value="OK!" hidden />
         </form>
       </div>

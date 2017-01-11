@@ -16,7 +16,7 @@
 const logger = (store) => (next) => (action) => {
   console.log('Middleware - Logger - Dispatching', action);
   const result = next(action);
-  console.log('Middleware - Logger - ', action.type, ' managed: ', result);
+  console.log('Middleware - Logger - ', action.type, ' managed: ', store.getState());
   return result;
 };
 
@@ -28,7 +28,8 @@ const crashReporter = (store) => (next) => (action) => {
     console.log('Middleware - CrashReporter - ', action.type, ' managed', result);
     return result;
   } catch (err) {
-    console.error('Middleware - CrashReporter - Caught an exception!', err);
+    console.error('Middleware - CrashReporter - Caught an exception!\n', err,
+                  '\nState when error ocurred: ', store.getState());
     // Logic to notify errors goes here
     /* Raven.captureException(err, {
        extra: {
@@ -49,15 +50,15 @@ const promiseMiddleware = (store) => (next) => (action) => {
   if (!promise) return next(action);
 
   const SUCCESS = type;
-  const REQUEST = type + '_REQUEST';
-  const FAILURE = type + '_FAILURE';
+  const REQUEST = `${type}_REQUEST`;
+  const FAILURE = `${type}_FAILURE`;
 
   console.log('Middleware - Promise - Next action: ', REQUEST);
   next({ ...rest, type: REQUEST });
   console.log('Middleware - Promise - ', REQUEST, ' managed');
 
   return promise
-    .then((res) => res.json ? res.json() : res) // this is needed when using fetch
+    .then((res) => (res.json ? res.json() : res)) // this is needed when using fetch
     .then((res) => {
       console.log('Middleware - Promise - Then - ', SUCCESS, ' | ', res);
       return next({ ...rest, res, type: SUCCESS });
@@ -65,7 +66,8 @@ const promiseMiddleware = (store) => (next) => (action) => {
     .catch((error) => {
       // Another benefit is being able to log all failures here
       // But instead, we created another action to manage errors.
-      console.log('Middleware - Promise - Catch - ', FAILURE, ' | ', error);
+      console.log('Middleware - Promise - Catch - ', FAILURE, ' | ', error,
+                  '\nState: ', store.getState());
       return next({ ...rest, error, type: FAILURE });
     });
 };

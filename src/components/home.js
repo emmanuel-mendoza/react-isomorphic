@@ -1,17 +1,15 @@
 import React from 'react';
 
-export default class Home extends React.Component {
-  render() {
-    return (
-      <div id="todo-list">
-        <h1>TODOS</h1>
-        <hr />
-        {React.cloneElement(this.props.children, this.props)}
-      </div>
-    );
-  }
-}
+const Home = (props) => (
+  <div id="todo-list">
+    <h1>TODOS</h1>
+    <hr />
+    {React.cloneElement(props.children, props)}
+  </div>
+);
 
 Home.propTypes = {
   children: React.PropTypes.node
 };
+
+export default Home;
