@@ -7,17 +7,17 @@ export default class TodosForm extends React.Component {
   }
 
   handleSubmit(e) {
-    //avoids page refreshing
+    // avoids page refreshing
     e.preventDefault();
 
-    let node = this.refs['todo-input'];
+    const node = this.refs['todo-input'];
 
     this.props.createTodo(node.value);
-    
-    //Clear the form after submission
+
+    // clear the form after submission
     this.refs.todosForm.reset();
   }
-  
+
   render() {
     return (
       <div id="todo-form">
@@ -32,4 +32,4 @@ export default class TodosForm extends React.Component {
 
 TodosForm.propTypes = {
   createTodo: React.PropTypes.func
-}
+};

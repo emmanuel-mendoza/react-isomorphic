@@ -14,4 +14,4 @@ export default class Home extends React.Component {
 
 Home.propTypes = {
   children: React.PropTypes.node
-}
+};

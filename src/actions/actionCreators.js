@@ -1,67 +1,58 @@
-//Request (this would fail when executing from server as objects only exist in client side)
-//let headers = new Headers();
-//headers.append('Accept', 'application/json');
-//headers.append('Content-Type', 'application/json');
+// Request (this would fail when executing from server as objects only exist in client side)
+// let headers = new Headers();
+// headers.append('Accept', 'application/json');
+// headers.append('Content-Type', 'application/json');
 
-let init = {
-  headers: { 
+const init = {
+  headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   }
 };
 
-//Get todos
+// Get todos
 export function getTodos() {
-  console.log('Action: Retrieving todos')
+  console.log('Action: Retrieving todos');
 
-  init.method = "GET";
-  init.body = "";
+  init.method = 'GET';
+  init.body = '';
 
   return {
     type: 'GET_TODOS',
-    promise: fetch("/api", init)
-  }
+    promise: fetch('/api', init)
+  };
 }
 
-//Add a todo item
+// Add a todo item
 export function createTodo(text) {
-  console.log("Action: Creating TODO item");
-  
-  //let mypromise = new Promise( (resolve, reject) => {
-  //  setTimeout(() => text!='fail'? resolve({text: text, date: Date.now()}) : reject({text: 'Request failed!'}),2000);
-  //});
+  console.log('Action: Creating TODO item');
 
-  init.method = "POST";
-  init.body = JSON.stringify({text: text, date: Date.now()});
+  init.method = 'POST';
+  init.body = JSON.stringify({ text, date: Date.now() });
 
   return {
     type: 'CREATE_TODO',
-    promise: fetch("/api", init)
-    //text, date: Date.now()
-  }
+    promise: fetch('/api', init)
+  };
 }
 
-
-//Edit a todo item
+// Edit a todo item
 export function editTodo(id, text) {
-  init.method = "PUT";
-  init.body = JSON.stringify({data: {text: text, date: Date.now()}, id: id});
+  init.method = 'PUT';
+  init.body = JSON.stringify({ data: { text, date: Date.now() }, id });
   return {
     type: 'EDIT_TODO',
-    id, 
-    promise: fetch("/api", init)
-    //text, date: Date.now()
-  }
+    id,
+    promise: fetch('/api', init)
+  };
 }
 
-
-//Delete a todo item 
+// Delete a todo item
 export function deleteTodo(id) {
-  init.method = "DELETE";
-  init.body = JSON.stringify({id: id});
+  init.method = 'DELETE';
+  init.body = JSON.stringify({ id });
   return {
     type: 'DELETE_TODO',
-    promise: fetch("/api", init)
-    //id
-  }
+    promise: fetch('/api', init)
+  };
 }

@@ -1,63 +1,68 @@
 {
     "parser": "babel-eslint",
+
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+
     "plugins": [
         "react"
     ],
-    "rules": {
-        //"max-len": [1, 120, 2, {"ignoreComments": true}],
-        "no-cond-assign": [2,"always"],
-        "no-dupe-args": 2,
-        "no-dupe-keys": 2,
-        "no-duplicate-case": 2,
-        "no-empty-character-class": 2,
-        "no-empty": [2],
-        "no-ex-assign": 2,
-        "no-extra-semi": 2,
-        "no-func-assign": 2,
-        "no-invalid-regexp": [2, {"allowConstructorFlags": ["u","y"]}],
-        "no-regex-spaces": 2,
-        "no-template-curly-in-string": 1,
-        "no-unexpected-multiline": 1,
-        "no-unreachable": 1,
-        "no-unsafe-finally": 2,
-        "no-unsafe-negation": 1,
-        "use-isnan": 2,
-        "valid-jsdoc": [1],
-        "valid-typeof": 2,
-        "react/display-name": [2],
-        "react/prop-types": [2],
-        "react/no-deprecated": 1,
-        "react/no-did-mount-set-state": [2, "disallow-in-func"],
-        "react/no-did-update-set-state": [2, "disallow-in-func"],
-        "react/no-direct-mutation-state": 2,
-        "react/no-find-dom-node": 2,
-        "react/no-is-mounted": 2,
-        "react/no-multi-comp": 2,
-        "react/no-render-return-value": 2,
-        "react/no-set-state": 2, //useful when using redux, flux, etc
-        "react/no-unescaped-entities": 1,
-        "react/no-unused-prop-types": [2],
-        "react/prefer-es6-class": [1, "always"],
-        "react/react-in-jsx-scope": 2,
-        //"react/require-optimization": [1], //shouldComponentUpdate should be declared
-        "react/require-render-return": 2,
-        "react/jsx-curly-spacing": [2,"never"],
-        "react/jsx-equals-spacing": [2,"never"],
-        "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-        "react/jsx-indent": [1, 2],
-        "react/jsx-no-comment-textnodes": 1,
-        "react/jsx-no-duplicate-props": [2, {"ignoreCase": true}],
-        "react/jsx-no-target-blank": 2,
-        "react/jsx-no-undef": 2,
-        "react/jsx-space-before-closing": [1, "always"],
-        "react/jsx-tag-spacing": [1, { "closingSlash": "never", "beforeSelfClosing": "always", "afterOpening": "never"}],
-        "react/jsx-uses-react": 2,
-        "react/jsx-uses-vars": 2
 
+    "extends": "airbnb",
+
+    "rules": {
+        // enforce the use of parenthesis in arrow functions
+        // http://eslint.org/docs/rules/arrow-parens
+        "arrow-parens": ["error", "always"],
+
+        // disallow trailing commas in objects
+        // http://eslint.org/docs/rules/comma-dangle
+        "comma-dangle": ["error", "never"],
+
+        // allow console
+        // http://eslint.org/docs/rules/no-console
+        "no-console": "off",
+
+        // allow mixed "LF" and "CRLF" as linebreaks as this is manged by github
+        // http://eslint.org/docs/rules/linebreak-style
+        "linebreak-style": "off",
+
+        // enforce a maximum line length to increase code readability and maintainability
+        // http://eslint.org/docs/rules/max-len
+        "max-len": ["warn", 120, 2, {"ignoreComments": true}],
+
+        // disable defaultProps definition for non-require props
+        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-default-props.md
+        "react/require-default-props": "off",
+
+        // allow only .js as file extension for jsx components
+        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
+        "react/jsx-filename-extension": ["error", { "extensions": [".js"] }]
+
+        //temporary off to verify if this is the reason of why webpack is not creating the bundle
+        ,"quote-props": "off",
+        "react/prefer-stateless-function": "off",
+        "no-unused-vars": "off",
+        "prefer-template": "off",
+        "no-confusing-arrow": "off",
+        "react/no-string-refs": "off"
     },
+
     "settings": {
         "react": {
             "version": "15.3" // React version, default to the latest React stable release
         }
+    },
+
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
     }
 }

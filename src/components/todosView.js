@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 
 export default class TodosView extends React.Component {
@@ -10,7 +8,23 @@ export default class TodosView extends React.Component {
     this.renderTodo = this.renderTodo.bind(this);
   }
 
-  renderTodo (todo, i) {
+  handleDelete(e) {
+    const id = Number(e.target.dataset.id);
+
+    // Equivalent to dispatch(deleteTodo())
+    this.props.deleteTodo(id);
+  }
+
+  handleEdit(e) {
+    const id = Number(e.target.dataset.id);
+    const val = this.props.todos[id];
+
+    // eslint-disable-next-line no-alert
+    const newVal = window.prompt('', val);
+    this.props.editTodo(id, newVal);
+  }
+
+  renderTodo(todo, i) {
     return (
       <div key={i}>
         <span>{todo.text}</span>
@@ -20,30 +34,13 @@ export default class TodosView extends React.Component {
     );
   }
 
-  handleDelete(e) {
-    const id = Number(e.target.dataset.id);
-
-    // Equivalent to dispatch(deleteTodo())
-    this.props.deleteTodo(id);
-  }
-
-  handleEdit(e) {
-    const id  = Number(e.target.dataset.id);
-    //const val = this.props.todos.get(id).text;
-    const val = this.props.todos[id];
-    
-    // For cutting edge UX
-    let newVal = window.prompt('', val);
-    this.props.editTodo(id, newVal);
-  }
-   
-  //This is used when not using server rendering
-  //componentDidMount() {
+  // This is used when not using server rendering
+  // componentDidMount() {
   //  this.props.getTodos();
-  //}
+  // }
 
   render() {
-    console.log('View component todos: ',this.props.todos);
+    console.log('View component todos: ', this.props.todos);
     return (
       <div id="todo-list">
         {this.props.todos.map(this.renderTodo)}
@@ -53,7 +50,10 @@ export default class TodosView extends React.Component {
 }
 
 TodosView.propTypes = {
-  todos: React.PropTypes.array.isRequired,
   deleteTodo: React.PropTypes.func.isRequired,
   editTodo: React.PropTypes.func.isRequired,
-}
+  todos: React.PropTypes.arrayOf(React.PropTypes.shape({
+    text: React.PropTypes.string.isRequired,
+    date: React.PropTypes.date
+  })).isRequired
+};
