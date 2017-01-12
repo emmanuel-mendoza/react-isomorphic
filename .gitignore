@@ -25,5 +25,8 @@ node_modules/
 # Output folder.
 public/
 
+# Build folder
+dist/
+
 # ES6 simple test folder
 test/

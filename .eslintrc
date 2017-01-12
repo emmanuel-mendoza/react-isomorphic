@@ -43,7 +43,11 @@
 
         // allow only .js as file extension for jsx components
         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
-        "react/jsx-filename-extension": ["error", { "extensions": [".js"] }]
+        "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
+
+        // allow all kind of dependencies by peer
+        // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": true, "peerDependencies": false}]
     },
 
     "settings": {

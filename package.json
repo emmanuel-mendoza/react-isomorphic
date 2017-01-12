@@ -9,9 +9,9 @@
   },
   "scripts": {
     "app-server": "node --harmony server",
-    "wp-server": "webpack-dev-server --progress --color",
+    "wpd-server": "webpack-dev-server --progress --color",
     "dev-start": "webpack && npm run app-server",
-    "start": "npm-run-all -p -r app-server wp-server"
+    "start": "npm-run-all -p -r app-server wpd-server"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

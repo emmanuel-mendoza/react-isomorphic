@@ -1,7 +1,9 @@
-var path    = require('path');
-var webpack = require('webpack');
+const path    = require('path');
+const webpack = require('webpack');
 
-module.exports = {
+const clientConfig = {
+  name: 'client',
+  target: 'web',
   entry:  [
     'webpack-dev-server/client?http://127.0.0.1:8080/',
     'webpack/hot/only-dev-server',
@@ -44,3 +46,31 @@ module.exports = {
     configFile: './.eslintrc'
   }
 };
+
+const serverConfig = {
+  name: 'server',
+  target: 'node',
+  entry: './server',
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'server.bundle.js',
+  },
+
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['babel-loader', 'eslint-loader'],
+        exclude: /node_modules/
+      }
+    ]
+  },
+  
+  devtool: 'source-map',
+
+  eslint: {
+    configFile: './.eslintrc'
+  }
+};
+
+module.exports = clientConfig; // , serverConfig];
