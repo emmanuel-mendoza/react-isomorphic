@@ -1,5 +1,11 @@
-const path    = require('path');
+const path = require('path');
 const webpack = require('webpack');
+const fs = require('fs');
+
+const nodeModules = fs.readdirSync('node_modules')
+  .filter(function(x) {
+    return ['.bin'].indexOf(x) === -1;
+  });
 
 const clientConfig = {
   name: 'client',
@@ -50,10 +56,11 @@ const clientConfig = {
 const serverConfig = {
   name: 'server',
   target: 'node',
-  entry: './server',
+  entry: './server.babel',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'server.bundle.js',
+    libraryTarget: 'commonjs2'
   },
 
   module: {
@@ -62,9 +69,15 @@ const serverConfig = {
         test: /\.js$/,
         loaders: ['babel-loader', 'eslint-loader'],
         exclude: /node_modules/
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   },
+
+  externals: nodeModules,
   
   devtool: 'source-map',
 
@@ -73,4 +86,4 @@ const serverConfig = {
   }
 };
 
-module.exports = clientConfig; // , serverConfig];
+module.exports = clientConfig;
