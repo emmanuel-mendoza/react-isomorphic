@@ -45,7 +45,9 @@
     "npm-run-all": "^3.1.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-middleware": "^1.9.0",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-hot-server-middleware": "0.0.4"
   },
   "license": "MIT"
 }
