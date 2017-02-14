@@ -72,5 +72,6 @@ const remove = (filename, index, delay = 0) => {
 };
 
 const filename = path.join(__dirname, 'todos.json');
+const delayme = 0;
 
-export { getAll, save, post, update, remove, filename };
+export { getAll, save, post, update, remove, filename, delayme };

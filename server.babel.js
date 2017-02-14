@@ -1,10 +1,7 @@
 import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
-import config from './webpack.server.config';
+import apimgr from './src/infra/api-manager';
 import routermgr from './src/infra/route-manager';
 
 const app = express();
@@ -19,11 +16,8 @@ app.set('views', path.join(__dirname, 'src', 'views'));
 app.use(bodyParser.json());                         // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-//HMR
-app.use(webpackDevMiddleware(compiler));
-app.use(webpackHotServerMiddleware(compiler));
-
-routermgr.handle(app);
+app.use(apimgr);
+app.use(routermgr);
 
 app.listen(3000, () => {
   console.log('Server listening at port 3000');

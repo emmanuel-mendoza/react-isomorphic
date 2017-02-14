@@ -6,7 +6,7 @@
 // action is evaluated before the first middleware is fired, throwing a unknonw
 // reference error.
 
-import { getAll, filename } from '../data/data-manager';
+import { getAll, filename, delayme } from '../data/data-manager';
 
 // Get todos
 function getTodosServer() {
@@ -14,7 +14,7 @@ function getTodosServer() {
 
   return {
     type: 'GET_TODOS',
-    promise: getAll(filename, 1000)
+    promise: getAll(filename, delayme)
   };
 }
 
