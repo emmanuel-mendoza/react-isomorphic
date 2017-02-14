@@ -2,51 +2,44 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 
-const nodeModules = fs.readdirSync('node_modules')
-  .filter(function(x) {
-    return ['.bin'].indexOf(x) === -1;
-  });
+const SRC_DIR = path.join(__dirname, './src');
+const DIST_DIR = path.join(__dirname, './dist');
 
-const serverConfig = {
-  name: 'server',
-
-  target: 'node',
-
-  entry: './server.babel',
-
+const clientConfig = {
+  name: 'client',
+  context: SRC_DIR,
+  entry: {
+    client: ['react-hot-loader/patch',
+      'webpack-hot-middleware/client',
+      './client/index'] },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'server.bundle.js',
-    libraryTarget: 'commonjs2'
+    path: DIST_DIR,
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
-
   module: {
     loaders: [
       {
         test: /\.js$/,
         loaders: ['babel-loader', 'eslint-loader'],
         exclude: /node_modules/
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       }
     ]
   },
-
-  context: __dirname,
-
+  target: 'web',
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
   node: {
-      __dirname: true
+    fs: 'empty'
   },
-
-  externals: nodeModules,
-  
-  devtool: 'source-map',
-
+  bail: false,
+  devtool: 'inline-source-map',
   eslint: {
     configFile: './.eslintrc'
   }
 };
 
-module.exports = serverConfig;
+module.exports = clientConfig;

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Home = (props) => (
   <div id="todo-list">
-    <h1>TODOS</h1>
+    <h1>TODOS LIST</h1>
     <hr />
     {React.cloneElement(props.children, props)}
   </div>

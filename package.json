@@ -11,7 +11,8 @@
     "app-server": "node --harmony server",
     "wpd-server": "webpack-dev-server --progress --color",
     "dev-start": "webpack && npm run app-server",
-    "start": "npm-run-all -p -r app-server wpd-server"
+    "wps-app-start": "npm-run-all -p -r app-server wpd-server",
+    "start": "node --harmony server"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -45,9 +46,8 @@
     "npm-run-all": "^3.1.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "webpack": "^1.13.3",
-    "webpack-dev-middleware": "^1.9.0",
-    "webpack-dev-server": "^1.16.2",
-    "webpack-hot-server-middleware": "0.0.4"
+    "webpack-dev-middleware": "^1.10.0",
+    "webpack-hot-middleware": "^2.16.1"
   },
   "license": "MIT"
 }
