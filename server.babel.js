@@ -5,7 +5,6 @@ import apimgr from './src/infra/api-manager';
 import routermgr from './src/infra/route-manager';
 
 const app = express();
-const compiler = webpack(config);
 
 // Setting Express to use EJS templating
 app.set('view engine', 'ejs');
