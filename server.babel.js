@@ -27,10 +27,12 @@ app.use(apimgr);
 // HMR - Starts
 const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {
+  hot: true,
   quiet: false,
-  publicPath: config.output.publicPath
+  publicPath: config[0].output.publicPath,
+  stats: { colors: true }
 }));
-app.use(webpackHotMiddleware(compiler, {
+app.use(webpackHotMiddleware(compiler.compilers.find((compiler) => compiler.name === 'client'), {
   log: () => {}
 }));
 // HMR - Ends

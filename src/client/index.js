@@ -12,3 +12,8 @@ render(
   </Provider>,
   document.getElementById('react-view')
 );
+
+// HMR
+if (module.hot) {
+  module.hot.accept();
+}

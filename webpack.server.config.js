@@ -5,7 +5,7 @@ const fs = require('fs');
 const SRC_DIR = path.join(__dirname, './src');
 const DIST_DIR = path.join(__dirname, './dist');
 
-const clientConfig = {
+const client = {
   name: 'client',
   context: SRC_DIR,
   entry: {
@@ -15,7 +15,7 @@ const clientConfig = {
   output: {
     path: DIST_DIR,
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: 'http://localhost:3000/static/'
   },
   module: {
     loaders: [
@@ -27,6 +27,7 @@ const clientConfig = {
     ]
   },
   target: 'web',
+  debug: true,
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -42,4 +43,4 @@ const clientConfig = {
   }
 };
 
-module.exports = clientConfig;
+module.exports = [client];
