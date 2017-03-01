@@ -3,7 +3,6 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
-import express from 'express';
 // import createMemoryHistory from 'history/createMemoryHistory'
 import routes from '../components/routes';
 import store from '../store';
