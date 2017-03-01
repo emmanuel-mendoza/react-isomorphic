@@ -47,7 +47,8 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.10.0",
-    "webpack-hot-middleware": "^2.16.1"
+    "webpack-hot-middleware": "^2.16.1",
+    "webpack-hot-server-middleware": "^0.0.4"
   },
   "license": "MIT"
 }

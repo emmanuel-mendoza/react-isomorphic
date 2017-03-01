@@ -43,4 +43,44 @@ const client = {
   }
 };
 
-module.exports = [client];
+const server = {
+  name: 'server',
+  context: SRC_DIR,
+  entry: {
+    server: './infra/route-manager'
+  },
+  output: {
+    path: DIST_DIR,
+    filename: '[name].js',
+    libraryTarget: 'commonjs2'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
+      }
+    ]
+  },
+  target: 'node',
+  debug: true,
+  plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    })
+  ],
+  node: {
+    process: false
+  },
+  bail: false,
+  externals: fs.readdirSync('node_modules')
+    .filter((x) => !x.includes('.bin'))
+    .reduce((externals, mod) => {
+      externals[mod] = `commonjs ${mod}`;
+      return externals;
+    }, {}),
+  devtool: 'eval'
+};
+
+module.exports = [client, server];

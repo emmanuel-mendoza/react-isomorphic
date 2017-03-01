@@ -3,6 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
+import express from 'express';
 // import createMemoryHistory from 'history/createMemoryHistory'
 import routes from '../components/routes';
 import store from '../store';
@@ -29,7 +30,7 @@ const fetchComponentData = (dispatch, components, params) => {
   return Promise.all(promises);
 };
 
-const router = (req, res) => {
+const router = (req, res, next) => {
   // const location = createMemoryHistory(req.url).location;
   console.log('URL: ', req.url, ' Date: ', Date.now());
 
