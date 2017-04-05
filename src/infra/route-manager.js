@@ -6,30 +6,27 @@ import { Provider } from 'react-redux';
 // import createMemoryHistory from 'history/createMemoryHistory'
 import routes from '../components/routes';
 import store from '../store';
-import clientToServerAction from '../actions/actionCreatorsServers';
 
 // Promises to gather all the data and dispatch it.
 const fetchComponentData = (dispatch, components, params) => {
-  console.log('Fetching needed component(s)');
-  const needs = components.reduce((prv, cur) => (
-    // checking component needed actions; WrappedComponent key needs to be checked as well
-    // as "smart" components will be wrapped in a Connector component.
-    prv.concat(cur.needs || [], ((cur.WrappedComponent ? cur.WrappedComponent.needs : []) || []))
-  ), []);
+  console.log('Fetching data needed for components');
 
-  console.log('Components needed data: ', needs);
+  let requests = components
+    // Filtering undefined components
+    .filter(component => component)
+    // Handle `connect`ed components
+    .map(component => component.WrappedComponent ? component.WrappedComponent : component)
+    // Get only the components that need data injection
+    .filter(component => component.needs)
+    // Flattering the array of arrays of actions
+    .reduce((previous, current) => previous.concat(current.needs), [])
+    // Dispatching actions
+    .map(action => dispatch(action(params)));
 
-  const promises = needs.map((need) => {
-    const servercompatible = clientToServerAction(need);
-    console.log('Dispatching: ', servercompatible.name,
-                need.name !== servercompatible.name ? ` from ${need.name}` : '');
-    return dispatch(clientToServerAction(need)(params));
-  });
-
-  return Promise.all(promises);
+  return Promise.all(requests);
 };
 
-const router = (req, res, next) => {
+const router = (stats) => (req, res, next) => {
   // const location = createMemoryHistory(req.url).location;
   console.log('URL: ', req.url, ' Date: ', Date.now());
 

@@ -8,17 +8,13 @@
     "url": "https://github.com/emmanuel-mendoza/react-isomorphic"
   },
   "scripts": {
-    "app-server": "node --harmony server",
-    "wpd-server": "webpack-dev-server --progress --color",
-    "dev-start": "webpack && npm run app-server",
-    "wps-app-start": "npm-run-all -p -r app-server wpd-server",
     "start": "node --harmony server"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "ejs": "^2.5.5",
     "express": "^4.14.0",
-    "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
     "object-assign": "^4.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",

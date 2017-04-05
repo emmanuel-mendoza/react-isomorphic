@@ -10,7 +10,6 @@ import config from './webpack.server.config';
 // HMR - Ends
 import apimgr from './src/infra/api-manager';
 import routesmgr from './src/infra/route-manager';
-import reqlogger from './src/infra/request-logger';
 
 const app = express();
 
@@ -37,11 +36,9 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler.compilers.find((compiler) => compiler.name === 'client'), {
   log: () => {}
 }));
-app.use(reqlogger);
 app.use(webpackHotServerMiddleware(compiler, {
   chunkName: 'server'
 }));
-app.use(reqlogger);
 // HMR - Ends
 
 // app.use(routesmgr);

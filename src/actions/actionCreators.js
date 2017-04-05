@@ -3,6 +3,8 @@
 // headers.append('Accept', 'application/json');
 // headers.append('Content-Type', 'application/json');
 
+import fetch from 'isomorphic-fetch';
+
 const init = {
   headers: {
     Accept: 'application/json',
@@ -19,7 +21,7 @@ export function getTodos() {
 
   return {
     type: 'GET_TODOS',
-    promise: fetch('/api', init)
+    promise: fetch('http://localhost:3000/api', init)
   };
 }
 
