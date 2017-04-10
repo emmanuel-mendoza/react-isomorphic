@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { RouterContext, match } from 'react-router';
+import { createMemoryHistory, RouterContext, match } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
-// import createMemoryHistory from 'history/createMemoryHistory'
 import routes from '../components/routes';
 import configureStore from '../store';
 
@@ -31,9 +31,10 @@ const router = (stats) => (req, res, next) => {
   console.log('URL: ', req.url, ' Date: ', Date.now());
 
   const store = configureStore();
+  const history = syncHistoryWithStore(createMemoryHistory(req.url), store);
 
   // react-router will manage the routes
-  match({ routes, location: req.url }, (error, redirect, props) => {
+  match({ history, routes, location: req.url }, (error, redirect, props) => {
     if (error) {
       // there was an error somewhere during route matching
       res.status(500).end(`Internal server error\n\n${error.message}`);
