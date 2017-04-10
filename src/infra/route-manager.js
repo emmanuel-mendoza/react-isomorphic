@@ -5,7 +5,7 @@ import { RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
 // import createMemoryHistory from 'history/createMemoryHistory'
 import routes from '../components/routes';
-import store from '../store';
+import configureStore from '../store';
 
 // Promises to gather all the data and dispatch it.
 const fetchComponentData = (dispatch, components, params) => {
@@ -29,6 +29,8 @@ const fetchComponentData = (dispatch, components, params) => {
 const router = (stats) => (req, res, next) => {
   // const location = createMemoryHistory(req.url).location;
   console.log('URL: ', req.url, ' Date: ', Date.now());
+
+  const store = configureStore();
 
   // react-router will manage the routes
   match({ routes, location: req.url }, (error, redirect, props) => {

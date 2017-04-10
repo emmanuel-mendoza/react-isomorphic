@@ -29,6 +29,10 @@
         // http://eslint.org/docs/rules/no-console
         "no-console": "off",
 
+        // allow underscore dangling
+        // http://eslint.org/docs/rules/no-underscore-dangle
+        "no-underscore-dangle": "off",
+
         // allow mixed "LF" and "CRLF" as linebreaks as this is manged by github
         // http://eslint.org/docs/rules/linebreak-style
         "linebreak-style": "off",

@@ -4,7 +4,9 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 
 import routes from '../components/routes';
-import store, { history } from '../store'; // eslint-disable-line no-unused-vars
+import configureStore from '../store';
+
+const store = configureStore(window.__INITIAL_STATE__.todos);
 
 render(
   <Provider store={store}>
