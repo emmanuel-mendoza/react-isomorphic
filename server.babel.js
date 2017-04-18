@@ -12,10 +12,6 @@ import apimgr from './src/infra/api-manager';
 import routesmgr from './src/infra/route-manager';
 
 const app = express();
-
-// Setting Express to use EJS templating
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'src', 'views'));
 // app.use(express.static('public'));
 
 // Middleware

@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import routes from '../components/routes';
 import configureStore from '../store';
+import Html from '../views';
 
 // Promises to gather all the data and dispatch it.
 const fetchComponentData = (dispatch, components, params) => {
@@ -56,13 +57,8 @@ const router = (stats) => (req, res, next) => {
             </Provider>
           );
 
-          // Passing the initial state
-          const initialState = store.getState();
-
-          console.log('Store state: ', initialState);
-          res.render('index', { markup, initialState });
-
-          return true;
+          // Rendering React component and passing the initial state to client
+          res.status(200).send(Html(store.getState(), markup));
         })
         .catch((err) => res.end(err.message));
     } else {
