@@ -1,23 +1,22 @@
-const path = require('path');
 const webpack = require('webpack');
+const path = require('path');
+const fs = require('fs');
 
-const clientConfig = {
+const SRC_DIR = path.join(__dirname, './src');
+const DIST_DIR = path.join(__dirname, './dist');
+
+const client = {
   name: 'client',
-  target: 'web',
-  entry:  [
-    'webpack-dev-server/client?http://127.0.0.1:8080/',
-    'webpack/hot/only-dev-server',
-    './src/client/index'
-  ],
+  context: SRC_DIR,
+  entry: {
+    client: ['react-hot-loader/patch',
+      'webpack-hot-middleware/client',
+      './client/index'] },
   output: {
-    path: path.join(__dirname, 'public','static'),
+    path: DIST_DIR,
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: 'http://localhost:3000/static/'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
   module: {
     loaders: [
       {
@@ -27,24 +26,61 @@ const clientConfig = {
       }
     ]
   },
-
+  target: 'web',
+  debug: true,
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
   node: {
-    fs: "empty"
+    fs: 'empty'
   },
-  
+  bail: false,
   devtool: 'inline-source-map',
-
-  devServer: {
-    hot: true,
-    proxy: {
-      '*': 'http://127.0.0.1:3000'
-    },
-    host: '127.0.0.1'
-  },
-
   eslint: {
     configFile: './.eslintrc'
   }
 };
 
-module.exports = clientConfig;
+const server = {
+  name: 'server',
+  context: SRC_DIR,
+  entry: {
+    server: './infra/route-manager'
+  },
+  output: {
+    path: DIST_DIR,
+    filename: '[name].js',
+    libraryTarget: 'commonjs2'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
+      }
+    ]
+  },
+  target: 'node',
+  debug: true,
+  plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    })
+  ],
+  node: {
+    process: false
+  },
+  bail: false,
+  externals: fs.readdirSync('node_modules')
+    .filter((x) => !x.includes('.bin'))
+    .reduce((externals, mod) => {
+      externals[mod] = `commonjs ${mod}`;
+      return externals;
+    }, {}),
+  devtool: 'eval'
+};
+
+module.exports = [client, server];

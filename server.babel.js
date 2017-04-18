@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
-import config from './webpack.server.config';
+import config from './webpack.config';
 // HMR - Ends
 import apimgr from './src/infra/api-manager';
 import routesmgr from './src/infra/route-manager';
