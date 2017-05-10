@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class TodosForm extends React.Component {
   constructor(props) {
@@ -29,5 +30,5 @@ export default class TodosForm extends React.Component {
 }
 
 TodosForm.propTypes = {
-  createTodo: React.PropTypes.func
+  createTodo: PropTypes.func
 };

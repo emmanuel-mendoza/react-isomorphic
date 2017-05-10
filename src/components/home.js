@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Home = (props) => (
   <div id="todo-list">
@@ -9,7 +10,7 @@ const Home = (props) => (
 );
 
 Home.propTypes = {
-  children: React.PropTypes.node
+  children: PropTypes.node
 };
 
 export default Home;

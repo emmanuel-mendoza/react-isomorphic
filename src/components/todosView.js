@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class TodosView extends React.Component {
   constructor(props) {
@@ -50,10 +51,10 @@ export default class TodosView extends React.Component {
 }
 
 TodosView.propTypes = {
-  deleteTodo: React.PropTypes.func.isRequired,
-  editTodo: React.PropTypes.func.isRequired,
-  todos: React.PropTypes.arrayOf(React.PropTypes.shape({
-    text: React.PropTypes.string.isRequired,
-    date: React.PropTypes.date
+  deleteTodo: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
+  todos: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    date: PropTypes.date
   })).isRequired
 };
