@@ -31,7 +31,10 @@ const client = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.BROWSER': true
+    })
   ],
   node: {
     fs: 'empty'
@@ -68,6 +71,9 @@ const server = {
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
+    }),
+    new webpack.DefinePlugin({
+      'process.env.BROWSER': false
     })
   ],
   node: {

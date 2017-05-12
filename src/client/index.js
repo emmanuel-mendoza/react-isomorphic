@@ -1,18 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
 
-import routes from '../components/routes';
+import Routes from '../components/routes';
 import configureStore from '../store';
+import history from '../history';
 
-const store = configureStore(window.__INITIAL_STATE__.todos);
-const history = syncHistoryWithStore(browserHistory, store);
+const store = configureStore(window.__INITIAL_STATE__.todos, history);
 
 render(
   <Provider store={store}>
-    <Router routes={routes} history={history} />
+    <ConnectedRouter history={history}>
+      <Routes />
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('react-view')
 );

@@ -1,16 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
+
+import App from './app';
 
 const Home = (props) => (
   <div id="todo-list">
     <h1>TODOS LIST</h1>
     <hr />
-    {React.cloneElement(props.children, props)}
+    <Route path="/" render={() => <App {...props} />} />
   </div>
 );
-
-Home.propTypes = {
-  children: PropTypes.node
-};
 
 export default Home;

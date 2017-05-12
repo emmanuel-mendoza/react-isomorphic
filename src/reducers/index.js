@@ -4,7 +4,7 @@ import { routerReducer } from 'react-router-redux';
 import todos from './todo';
 
 const rootReducer = combineReducers({ todos,
-  routing: routerReducer });
+  router: routerReducer });
 
 export default rootReducer;
 

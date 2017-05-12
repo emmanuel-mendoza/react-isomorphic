@@ -1,18 +1,19 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { createMemoryHistory, RouterContext, match } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { StaticRouter, matchPath } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import routes from '../components/routes';
+
+import Routes, { routes } from '../components/routes';
 import configureStore from '../store';
+import history from '../history';
 import Html from '../views';
 
 // Promises to gather all the data and dispatch it.
 const fetchComponentData = (dispatch, components, params) => {
   console.log('Fetching data needed for components');
 
-  let requests = components
+  const requests = components
     // Filtering undefined components
     .filter(component => component)
     // Handle `connect`ed components
@@ -28,46 +29,40 @@ const fetchComponentData = (dispatch, components, params) => {
 };
 
 const router = (stats) => (req, res, next) => {
-  // const location = createMemoryHistory(req.url).location;
   console.log('URL: ', req.url, ' Date: ', Date.now());
 
-  const store = configureStore();
-  const history = syncHistoryWithStore(createMemoryHistory(req.url), store);
+  // matching the request url against the routes
+  const match = routes.find((route) => matchPath(req.url, route.path, {extact: true}));
 
-  // react-router will manage the routes
-  match({ history, routes, location: req.url }, (error, redirect, props) => {
-    if (error) {
-      // there was an error somewhere during route matching
-      res.status(500).end(`Internal server error\n\n${error.message}`);
-    } else if (redirect) {
-      // Before a route is entered, it can redirect. Here we handle on the server.
-      res.redirect(redirect.pathname + redirect.search);
-    } else if (props) {
-      // if we got props then we matched a route and can render
-      console.log('Dispatching');
-      fetchComponentData(store.dispatch, props.components, props.params)
-        .then((val) => {
-          console.log('Rendering: ', val);
-          // `RouterContext` is what the `Router` renders. `Router` keeps these `props`
-          // in its state as it listens to `browserHistory`. But on the server our app
-          // is stateless, so we need to use `match` to get these props before rendering.
-          const markup = renderToString(
-            <Provider store={store}>
-              <RouterContext {...props} />
-            </Provider>
-          );
+  // if no route matched the url, return a 404 Not Found
+  if (!match) {
+    res.status(404).send('Not Found');
+    return;
+  }
 
-          // Rendering React component and passing the initial state to client
-          res.status(200).send(Html(store.getState(), markup));
-        })
-        .catch((err) => res.end(err.message));
-    } else {
-      // no errors, no redirect, we just didn't match anything
-      res.status(404).send('Not Found');
-    }
+  const store = configureStore(undefined, history);  
+  fetchComponentData(store.dispatch, [match.component], match.params)
+    .then((val) => {
+      const context = {};
+      const markup = renderToString(
+        <Provider store={store}>
+          <StaticRouter location={req.url} context={context}>
+            <Routes />
+          </StaticRouter>
+        </Provider>
+      );
 
-    return true;
-  });
+      // Request needs to be redirected if context.url is defined
+      if (context.url) {
+        res.redirect(301, context.url);
+      // Send rendered matched route with data to client
+      } else {
+        res.status(200).send(Html(store.getState(), markup));
+      }
+  })
+  .catch((err) => res.end(err.message));
+
+  return;
 };
 
 export default router;

@@ -1,12 +1,15 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route } from 'react-router-dom';
 
-import App from './app';
 import AppContainer from './appcontainer';
+import App from './app';
+
+// routes to be used when matching request url in server side
+export const routes = [
+  { name: 'app', path: '/', component: App }
+];
 
 // only routes are defined so it can be used by both server and client
-export default (
-  <Route path="/" component={AppContainer}>
-    <IndexRoute component={App} />
-  </Route>
+export default () => (
+  <Route exact path="/" component={AppContainer} />
 );
