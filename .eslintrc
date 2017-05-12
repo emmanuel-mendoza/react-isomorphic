@@ -10,9 +10,8 @@
         }
     },
 
-    "plugins": [
-        "react"
-    ],
+    // No plugins needed as all of them are included by airbnb (eslint-config-airbnb)
+    // "plugins": [ "react", "import", "jsx-a11y" ],
 
     "extends": "airbnb",
 
