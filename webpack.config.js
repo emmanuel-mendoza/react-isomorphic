@@ -18,20 +18,28 @@ const client = {
     publicPath: 'http://localhost:3000/static/'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel-loader', 'eslint-loader'],
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        options: { configFile: './.eslintrc' }
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/
       }
     ]
   },
   target: 'web',
-  debug: true,
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true
     })
@@ -40,10 +48,7 @@ const client = {
     fs: 'empty'
   },
   bail: false,
-  devtool: 'inline-source-map',
-  eslint: {
-    configFile: './.eslintrc'
-  }
+  devtool: 'inline-source-map'
 };
 
 const server = {
@@ -58,19 +63,21 @@ const server = {
     libraryTarget: 'commonjs2'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel-loader'],
+        loader: 'babel-loader',
         exclude: /node_modules/
       }
     ]
   },
   target: 'node',
-  debug: true,
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
+    }),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
     }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': false
