@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from '../styles/index.css';
 
 export default class TodosForm extends React.Component {
   constructor(props) {
@@ -21,7 +22,10 @@ export default class TodosForm extends React.Component {
     return (
       <div id="todo-form">
         <form ref={(form) => { this.todosForm = form; }} onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="type todo" ref={(input) => { this.todoInput = input; }} />
+          <input
+            type="text" placeholder="type todo" className={styles.textbox}
+            ref={(input) => { this.todoInput = input; }}
+          />
           <input type="submit" value="OK!" hidden />
         </form>
       </div>

@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const SRC_DIR = path.join(__dirname, './src');
 const DIST_DIR = path.join(__dirname, './dist');
@@ -30,6 +31,23 @@ const client = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                sourceMap: true,
+                localIdentName: '[name]_[local]_[hash:base64:5]'
+              }
+            }
+          ]
+        }),
+        exclude: /node_modules/
       }
     ]
   },
@@ -42,6 +60,11 @@ const client = {
     }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true
+    }),
+    new ExtractTextPlugin({
+      filename: 'styles.css',
+      allChunks: true,
+      disable: true
     })
   ],
   node: {
@@ -67,6 +90,20 @@ const server = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'css-loader/locals',
+            options: {
+              modules: true,
+              sourceMap: true,
+              localIdentName: '[name]_[local]_[hash:base64:5]'
+            }
+          }
+        ],
         exclude: /node_modules/
       }
     ]

@@ -12,7 +12,7 @@ const getAll = (filename, delay = 0) => (
 const save = (filename, data, delay = 0) => (
   new Promise((resolve, reject) => {
     setTimeout(() => {
-      FS.writeFile(filename, JSON.stringify(data), (err) => (!err ? resolve(data) : reject(err)));
+      FS.writeFile(filename, JSON.stringify(data, null, 2), (err) => (!err ? resolve(data) : reject(err)));
     }, delay);
   })
 );
