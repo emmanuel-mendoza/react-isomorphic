@@ -50,7 +50,6 @@ const router = (stats) => {
 
   return (req, res, next) => {
     console.log('URL: ', req.url, ' Date: ', Date.now());
-    console.log(JSON.stringify(css));
 
     // matching the request url against the routes
     const match = routes.find((route) => matchPath(req.url, route.path, {extact: true}));
@@ -79,7 +78,6 @@ const router = (stats) => {
         // Send rendered matched route with data to client
       } else {
           const html = Html(store.getState(), css, markup);
-          console.log(html);
           res.status(200).send(html);
         }
     })
