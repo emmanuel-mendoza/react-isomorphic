@@ -28,21 +28,23 @@ const fetchComponentData = (dispatch, components, params) => {
   return Promise.all(requests);
 };
 
-function isTruthy(val) {
-  return !!val;
-};
+const isTruthy = (val) => !!val;
 
-function getCssByChunkName(name, assetsByChunkName) {
+const getTypeByChunkName = (name, assetsByChunkName, assetType) => {
   let assets = assetsByChunkName[name];
   if (!Array.isArray(assets)) {
     assets = [assets];
   }
-  return assets.find(asset => /\.css$/.test(asset));
+  return assets.filter(asset => new RegExp(`\\.${assetType}$`).test(asset));
 };
 
-function getCss(assetsByChunkName) {
-  return [getCssByChunkName('client', assetsByChunkName)].filter(isTruthy);
-};
+const getCss = (assetsByChunkName) => (
+  getTypeByChunkName('client', assetsByChunkName, 'css').filter(isTruthy)
+);
+
+const getJs = (assetsByChunkName) => (
+  getTypeByChunkName('client', assetsByChunkName, 'js').filter(isTruthy)
+);
 
 const render = (location, store, stats) => {
   // Rendering the main markup (the server counter-part of /client/index.js)
@@ -57,7 +59,7 @@ const render = (location, store, stats) => {
 
   // Getting the assets
   const css = getCss(stats.assetsByChunkName);
-  const js=["bundle.js"];
+  const js = getJs(stats.assetsByChunkName);
   const initialState = store.getState();
 
   return renderToStaticMarkup(
@@ -72,7 +74,6 @@ const render = (location, store, stats) => {
 
 const router = (stats) => {
   const assetsByChunkName = stats.clientStats.assetsByChunkName;
-  //const css = getCss(assetsByChunkName);
 
   return (req, res, next) => {
     console.log('URL: ', req.url, ' Date: ', Date.now());
@@ -92,8 +93,7 @@ const router = (stats) => {
         // TO-DO: Need to research how to handle re-direction
         //if (context.url) res.redirect(301, context.url);
         
-        //const html = Html(store.getState(), css, markup);
-        const html=render(req.url, store, {assetsByChunkName});
+        const html = render(req.url, store, {assetsByChunkName});
         res.status(200).send(`<!doctype html>${html}`);
     })
     .catch((err) => res.end(err.message));
