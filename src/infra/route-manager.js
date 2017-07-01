@@ -4,7 +4,7 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import Routes, { routes } from '../components/routes';
+import Routes, { routes, matchRoutes } from '../components/routes.config';
 import configureStore from '../store';
 import history from '../history';
 import Html from '../components/html';
@@ -52,7 +52,7 @@ const render = (location, store, stats) => {
   const markup = renderToString(
     <Provider store={store}>
       <StaticRouter location={location} context={context}>
-        <Routes />
+        <Routes routes={routes} />
       </StaticRouter>
     </Provider>
   );
@@ -79,7 +79,7 @@ const router = (stats) => {
     console.log('URL: ', req.url, ' Date: ', Date.now());
 
     // matching the request url against the routes
-    const match = routes.find((route) => matchPath(req.url, route.path, {extact: true}));
+    const match = matchRoutes(req.url);
 
     // if no route matched the url, return a 404 Not Found
     if (!match) {

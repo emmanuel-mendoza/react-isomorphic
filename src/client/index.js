@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 
-import Routes from '../components/routes';
+import Routes, { routes } from '../components/routes.config';
 import configureStore from '../store';
 import history from '../history';
 
@@ -12,7 +12,7 @@ const store = configureStore(window.__INITIAL_STATE__.todos, history);
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Routes />
+      <Routes routes={routes} />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('react-view')
