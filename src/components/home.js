@@ -1,22 +1,12 @@
 import React from 'react';
 
-import Routes from './routes.config';
-// TODO: it doesn't work if I import only the function without using stage-0 way, dunno why
-import * as TodoActions from '../actions/actionCreators';
+import TodosView from './todosView';
+import TodosForm from './todosForm';
 
-const needs = [TodoActions.getTodos];
+export default (props) => (
+  <div id="todos">
+    <TodosView {...props} />
 
-export default class Home extends React.Component {
-  // static needs = [TodoActions.getTodos]; // Available only for stage-0 preset which is not recommended
-  static get needs() { return needs; }
-
-  render() {
-    return (
-      <div id="todo-list">
-        <h1>TODOS LIST</h1>
-        <hr />
-        <Routes {...this.props} />
-      </div>
-    );
-  }
-}
+    <TodosForm {...props} />
+  </div>
+);

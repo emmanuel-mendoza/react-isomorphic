@@ -3,7 +3,7 @@ import { Route, Switch, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import AppContainer from './appcontainer';
-import App from './app';
+import Home from './home';
 
 
 // route configuration
@@ -16,11 +16,11 @@ export const routes = [
     component: AppContainer,
     routes: [
       {
-        name: 'app',
+        name: 'home',
         path: '/',
         exact: true,
         render: true,
-        component: App
+        component: Home
       }
     ]
   }
