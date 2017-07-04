@@ -51,6 +51,8 @@ const client = {
               options: {
                 ident: 'postcss',
                 plugins: (loader) => [
+                  require('postcss-import')(),
+                  require('postcss-cssnext')({ features: { autoprefixer: false }}),
                   require('autoprefixer')({ remove: false })
                 ]
               }

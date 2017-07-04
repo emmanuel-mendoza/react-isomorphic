@@ -1,4 +1,7 @@
-.textbox {
-    background-color: red;
+:root {
+  --textbox-width: 140px;
+  --input-theme: {
+    background-color: blue;
     color: white;
+  };
 }

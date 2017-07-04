@@ -1,0 +1,6 @@
+@import "./index.css";
+
+.textbox {
+    @apply --input-theme;
+    width: var(--textbox-width);
+}

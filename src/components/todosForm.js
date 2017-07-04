@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../styles/index.css';
+import styles from '../styles/textbox.css';
 
 export default class TodosForm extends React.Component {
   constructor(props) {
