@@ -42,7 +42,17 @@ const client = {
               options: {
                 modules: true,
                 sourceMap: true,
+                importLoaders: 1,
                 localIdentName: '[name]_[local]_[hash:base64:5]'
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: (loader) => [
+                  require('autoprefixer')({ remove: false })
+                ]
               }
             }
           ]

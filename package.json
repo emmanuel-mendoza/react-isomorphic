@@ -26,6 +26,7 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
+    "autoprefixer": "^7.1.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.1",
@@ -46,6 +47,7 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "jest": "^20.0.1",
     "json-loader": "^0.5.4",
+    "postcss-loader": "^2.0.6",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-test-renderer": "^15.5.4",
     "stats-webpack-plugin": "^0.6.0",

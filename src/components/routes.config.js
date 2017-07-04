@@ -35,7 +35,6 @@ export const matchRoutes = (url) => {
     // first route matched.
     routes.some((route) => {
       let matched = !!matchPath(url, { path: route.path, exact: route.exact });
-      console.log(`Match between ${url} and ${route.path} is ${JSON.stringify(matched)}`);
       if (matched) {
         matchedRoute = route;
       } else if (route.routes) {
