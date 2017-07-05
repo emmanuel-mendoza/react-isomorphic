@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
-import { StaticRouter, matchPath } from 'react-router-dom';
+import { StaticRouter as Router, matchPath } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import Routes, { routes, matchRoutes } from '../components/routes.config';
@@ -51,9 +51,9 @@ const render = (location, store, stats) => {
   let context={};
   const markup = renderToString(
     <Provider store={store}>
-      <StaticRouter location={location} context={context}>
+      <Router location={location} context={context}>
         <Routes routes={routes} />
-      </StaticRouter>
+      </Router>
     </Provider>
   );
 
