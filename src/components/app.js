@@ -3,7 +3,6 @@ import React from 'react';
 // TODO: it doesn't work if I import only the function without using stage-0 way, dunno why
 import * as TodoActions from '../actions/actionCreators';
 import Routes from './routes.config';
-import ReduxDevTools from './reduxDevTools';
 
 const needs = [TodoActions.getTodos];
 
@@ -17,7 +16,6 @@ export default class Home extends React.Component {
         <h1>TODOS LIST</h1>
         <hr />
         <Routes {...this.props} />
-        <ReduxDevTools />
       </div>
     );
   }

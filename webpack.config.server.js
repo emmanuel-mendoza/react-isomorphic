@@ -44,7 +44,8 @@ const server = (SRC_DIR, DIST_DIR) => ({
       debug: true
     }),
     new webpack.DefinePlugin({
-      'process.env.BROWSER': false
+      'process.env.BROWSER': false,
+      'process.env.REDUX_DEV_TOOLS': false
     })
   ],
   node: {

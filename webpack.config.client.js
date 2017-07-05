@@ -66,7 +66,8 @@ const client = (SRC_DIR, DIST_DIR) => ({
       debug: true
     }),
     new webpack.DefinePlugin({
-      'process.env.BROWSER': true
+      'process.env.BROWSER': true,
+      'process.env.REDUX_DEV_TOOLS': false
     }),
     new ExtractTextPlugin({
       filename: 'styles.css',
