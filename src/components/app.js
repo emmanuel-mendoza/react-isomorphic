@@ -6,7 +6,7 @@ import Routes from './routes.config';
 
 const needs = [TodoActions.getTodos];
 
-export default class Home extends React.Component {
+export default class App extends React.Component {
   // static needs = [TodoActions.getTodos]; // Available only for stage-0 preset which is not recommended
   static get needs() { return needs; }
 
