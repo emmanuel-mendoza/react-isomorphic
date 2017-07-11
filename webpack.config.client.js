@@ -10,7 +10,7 @@ const client = (SRC_DIR, DIST_DIR) => ({
       './client/index'] },
   output: {
     path: DIST_DIR,
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: 'http://localhost:3000/static/'
   },
   module: {
@@ -73,6 +73,10 @@ const client = (SRC_DIR, DIST_DIR) => ({
       filename: 'styles.css',
       allChunks: true,
       disable: true
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: ({ resource }) => /node_modules/.test(resource)
     })
   ],
   node: {

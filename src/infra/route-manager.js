@@ -43,7 +43,9 @@ const getCss = (assetsByChunkName) => (
 );
 
 const getJs = (assetsByChunkName) => (
-  getTypeByChunkName('client', assetsByChunkName, 'js').filter(isTruthy)
+  getTypeByChunkName('vendor', assetsByChunkName, 'js').filter(isTruthy).concat(
+    getTypeByChunkName('client', assetsByChunkName, 'js').filter(isTruthy)
+  )
 );
 
 const render = (location, store, stats) => {

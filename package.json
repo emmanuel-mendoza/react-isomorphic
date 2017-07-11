@@ -8,7 +8,7 @@
     "url": "https://github.com/emmanuel-mendoza/react-isomorphic"
   },
   "scripts": {
-    "start": "node --harmony server",
+    "start": "node --harmony server.babel",
     "test": "jest"
   },
   "dependencies": {
