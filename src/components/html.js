@@ -20,7 +20,7 @@ const Html = ({js, css, html, initialState}) => (
           __html: `window.__INITIAL_STATE__=${JSON.stringify(initialState)}`
         }}
       />
-      {js.map(js => <script key={js} src={`/static/${js}`} />)}
+      {js.map(js => <script defer key={js} src={`/static/${js}`} />)}
     </body>
   </html>
 );
