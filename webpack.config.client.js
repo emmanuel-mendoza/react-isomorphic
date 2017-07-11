@@ -77,13 +77,16 @@ const client = (SRC_DIR, DIST_DIR) => ({
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: ({ resource }) => /node_modules/.test(resource)
+    }),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[name].js.map',
+      exclude: ['vendor.js']
     })
   ],
   node: {
     fs: 'empty'
   },
-  bail: false,
-  devtool: 'inline-source-map'
+  bail: false
 });
 
 module.exports = client;
