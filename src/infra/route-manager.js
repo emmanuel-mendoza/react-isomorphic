@@ -79,8 +79,8 @@ const router = (stats) => {
   return (req, res, next) => {
     console.log('URL: ', req.url, ' Date: ', Date.now());
 
-    //TO-DO: Remove this
-    if (req.url === '/favicon.ico') return;
+    //TO-DO: Check how to handle assest
+    if (/\.(ico|json)$/.test(req.url)) return;
 
     // matching the request url against the routes
     const match = matchRoutes(req.url, routes);

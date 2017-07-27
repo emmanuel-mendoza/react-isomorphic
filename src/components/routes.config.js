@@ -28,7 +28,7 @@ export const routes = [
 ];
 
 // Retrieves all routes to be rendered by matching URL
-/* eslint-disable no-param-reassign, no-unused-expressions, no-extra-boolean-cast */
+/* eslint-disable no-unused-expressions, no-extra-boolean-cast */
 export const matchRoutes = (url, routes, switched = false) => {
   const matchedRoutes = [];
 
@@ -38,8 +38,7 @@ export const matchRoutes = (url, routes, switched = false) => {
 
     if (!!matched) {
       // Add the params to matched route
-      route.params = matched.params;
-      matchedRoutes.push(route);
+      matchedRoutes.push({ ...route, params: matched.params });
 
       // Getting the matched children routes.
       if (route.routes) {
@@ -60,7 +59,7 @@ export const matchRoutes = (url, routes, switched = false) => {
 
   return matchedRoutes;
 };
-/* eslint-enable no-param-reassign, no-unused-expressions, no-extra-boolean-cast */
+/* eslint-enable no-unused-expressions, no-extra-boolean-cast */
 
 // Retieves an array of components extracted from provided routes structure.
 export const flattenRoutes = (routes) => (
