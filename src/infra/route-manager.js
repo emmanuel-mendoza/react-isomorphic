@@ -1,29 +1,28 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
-import { StaticRouter as Router, matchPath } from 'react-router-dom';
+import { StaticRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import Routes, { routes, matchRoutes } from '../components/routes.config';
+import Routes, { routes, matchRoutes, getComponentsFromRoutes } from '../components/routes.config';
 import configureStore from '../store';
 import history from '../history';
 import Html from '../components/html';
 
 // Promises to gather all the data and dispatch it.
-const fetchComponentData = (dispatch, components, params) => {
-  console.log('Fetching data needed for components');
-
+const fetchComponentData = (dispatch, components) => {
+  console.log(`Fetching data needed for components ${JSON.stringify(components)}`);
+  const test = () => (1);
   const requests = components
-    // Filtering undefined components
-    .filter(component => component)
-    // Handle `connect`ed components
-    .map(component => component.WrappedComponent ? component.WrappedComponent : component)
-    // Get only the components that need data injection
-    .filter(component => component.needs)
-    // Flattering the array of arrays of actions
-    .reduce((previous, current) => previous.concat(current.needs), [])
-    // Dispatching actions
-    .map(action => dispatch(action(params)));
+    .reduce((actions, component) => {
+      if (component.component) {
+        // Handle `connect`ed components and getting the action
+        const needs = component.component.WrappedComponent ? component.component.WrappedComponent.needs : component.component.needs;
+        // If component needs an action then it is added.
+        if (needs) return actions.concat(needs.map((need) => (dispatch(need(component.params))) ));
+      }
+      return actions;
+    }, []);
 
   return Promise.all(requests);
 };
@@ -80,8 +79,11 @@ const router = (stats) => {
   return (req, res, next) => {
     console.log('URL: ', req.url, ' Date: ', Date.now());
 
+    //TO-DO: Remove this
+    if (req.url === '/favicon.ico') return;
+
     // matching the request url against the routes
-    const match = matchRoutes(req.url);
+    const match = matchRoutes(req.url, routes);
 
     // if no route matched the url, return a 404 Not Found
     if (!match) {
@@ -90,7 +92,7 @@ const router = (stats) => {
     }
 
     const store = configureStore(undefined, history);  
-    fetchComponentData(store.dispatch, [match.component], match.params)
+    fetchComponentData(store.dispatch, getComponentsFromRoutes(match))
       .then((val) => {
         // TO-DO: Need to research how to handle re-direction
         //if (context.url) res.redirect(301, context.url);
